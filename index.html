@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<!-- QQMCBridge 官网 — 参照 Mass 控制前台 设计语言重制 -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QQMCBridge+ — 腾讯官方群服互通（魔改增强版）</title>
+  <meta name="description" content="QQMCBridge+：基于腾讯官方机器人协议的 Minecraft BDS 群服互通插件。原插件 QQMCBridge 的魔改增强版，在完整群服互通基础上扩展 JS/Python 子插件生态、HTML 图卡渲染、多服务器聚合与本地 Web 管理面板。">
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="stylesheet" href="./assets/main.css">
+  <link rel="stylesheet" href="./assets/site.css">
+  <link rel="stylesheet" href="./assets/mc-theme.css">
+  <script defer src="./assets/main.js"></script>
+  <noscript>
+    <style>
+      .reveal, .hero-animate { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
+</head>
+<body class="is-grid-active">
+  <div class="page-vignette" aria-hidden="true"></div>
+
+  <!-- ── 导航 ─────────────────────────────────────────── -->
+  <header class="site-nav" id="topNav">
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="QQMCBridge+ 首页">
+        <svg class="brand-mark" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="brandGrad" x1="2" y1="2" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#0d84ff"/>
+              <stop offset="1" stop-color="#0694a2"/>
+            </linearGradient>
+          </defs>
+          <rect x="1.5" y="1.5" width="23" height="23" rx="6.5" fill="url(#brandGrad)"/>
+          <path d="M6.8 9.2c0-1.4 1.1-2.5 2.5-2.5h7.4c1.4 0 2.5 1.1 2.5 2.5v4.6c0 1.4-1.1 2.5-2.5 2.5h-3.7l-3.4 2.6v-2.6h-.3c-1.4 0-2.5-1.1-2.5-2.5V9.2Z" fill="#fff"/>
+          <circle cx="9.6" cy="11.3" r="1" fill="#0d84ff"/>
+          <circle cx="13" cy="11.3" r="1" fill="#0d84ff"/>
+          <circle cx="16.4" cy="11.3" r="1" fill="#0d84ff"/>
+        </svg>
+        <span class="brand-text">QQMCBridge<em class="brand-plus">+</em></span>
+      </a>
+
+      <div class="nav-left-links" aria-label="站内导航">
+        <a class="nav-plain-link" href="#features">功能</a>
+        <a class="nav-plain-link" href="#architecture">架构</a>
+        <a class="nav-plain-link" href="#commands">命令</a>
+        <a class="nav-plain-link nav-plain-link--repo" href="#repos">仓库</a>
+        <a class="nav-plain-link" href="#download">下载</a>
+      </div>
+
+      <a class="nav-github"
+         href="https://github.com/fengyushaonian/QQMCBridgeplus-LSE"
+         target="_blank" rel="noopener noreferrer"
+         aria-label="在 GitHub 打开 QQMCBridgeplus-LSE">
+        <i class="ri-github-fill"></i>
+        <span class="nav-github-text">GitHub</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="打开菜单" aria-controls="navLinks" aria-expanded="false">
+        <i class="ri-menu-line"></i>
+      </button>
+    </div>
+  </header>
+  <button class="nav-scrim" id="navScrim" type="button" aria-hidden="true" tabindex="-1"></button>
+
+  <main id="top">
+
+    <!-- ── Hero ─────────────────────────────────────────── -->
+    <div class="hero-wrap">
+      <!-- MC 地层：顶部草方块 → 中部泥土 → 底部石头(70%) -->
+      <div class="mc-strata mc-strata--grass" aria-hidden="true"></div>
+      <div class="mc-strata mc-strata--dirt" aria-hidden="true"></div>
+      <div class="mc-strata mc-strata--stone" aria-hidden="true"></div>
+
+      <div class="page-grid" id="pageGrid" aria-hidden="true"></div>
+      <div class="grid-highlight" id="gridHighlight" aria-hidden="true"></div>
+
+      <section class="hero hero-section">
+        <div class="hero-layout">
+          <div class="hero-copy hero-animate is-visible">
+            <p class="hero-eyebrow">QQMCBridge<em class="brand-plus">+</em> · 群服互通插件</p>
+            <span class="enhance-badge"><i class="ri-flashlight-line"></i>基于原版 QQMCBridge 的魔改增强版</span>
+
+            <h1 class="hero-title">
+              <span>连接 QQ 群</span>
+              <span>连接 Minecraft</span>
+            </h1>
+
+            <div class="hero-rotator" aria-live="polite">
+              <span>支持</span>
+              <span class="hero-chip is-switching" id="heroChip" data-words="腾讯官方机器人协议|LSE 子插件生态|多服务器全服互通|Python 网关与图卡渲染" style="--chip-width: 320px;">
+                <span class="hero-chip-viewport">
+                  <span class="hero-chip-line hero-chip-current" id="heroChipCurrent"></span>
+                  <span class="hero-chip-line hero-chip-next" id="heroChipNext"></span>
+                </span>
+                <span class="hero-chip-meter" id="heroChipMeter">腾讯官方机器人协议</span>
+              </span>
+            </div>
+
+            <div class="hero-actions">
+              <a class="cta-link cta-color-blue cta-primary" href="#download" draggable="false"><i class="ri-download-cloud-2-line"></i>立即下载</a>
+              <a class="cta-link cta-color-teal cta-secondary" href="#features" draggable="false"><i class="ri-flashlight-line"></i>查看功能</a>
+              <a class="cta-link cta-color-discord cta-secondary" href="#download" draggable="false"><i class="ri-file-list-3-line"></i>部署文档</a>
+            </div>
+          </div>
+
+          <!-- 右侧产品示意 -->
+          <div class="hero-visual hero-animate is-visible" aria-hidden="true">
+            <div class="hv-card hv-card--qq">
+              <div class="hv-card-head">
+                <i class="ri-qq-fill"></i>
+                <span>QQ 群 · 群服互通</span>
+              </div>
+              <div class="hv-msg hv-msg--out">查服</div>
+              <div class="hv-msg hv-msg--in">【主服】在线（3 人）：Steve、Alex、Herobrine</div>
+              <div class="hv-msg hv-msg--in">【主服】Steve：有人上线了！</div>
+            </div>
+            <div class="hv-bridge"><i class="ri-arrow-left-right-line"></i></div>
+            <div class="hv-card hv-card--mc">
+              <div class="hv-card-head">
+                <i class="ri-gamepad-line"></i>
+                <span>BDS 服务器 · 主服</span>
+              </div>
+              <div class="hv-msg hv-msg--in">[QQ群] 小明：大家好呀</div>
+              <div class="hv-msg hv-msg--in">[QQ群] 小红：有人来空岛玩吗</div>
+              <div class="hv-msg hv-msg--out">[系统] Alex 加入服务器</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div><!-- /.hero-wrap -->
+
+    <!-- ── 功能特性 ─────────────────────────────────────── -->
+    <section class="site-section" id="features">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Features</p>
+        <h2 class="section-title">一套插件，串起群与服</h2>
+        <p class="section-desc">这是原插件 <strong>QQMCBridge</strong> 的魔改增强版（<strong>QQMCBridge+</strong>）：在保留原版聊天互通、进服通知、群命令等全部能力的基础上，扩展了双端子插件生态（JS mods + Python pymods）、HTML 图卡渲染、多服务器聚合与本地 Web 管理面板。</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature-card reveal">
+          <div class="feature-icon"><i class="ri-exchange-2-line"></i></div>
+          <h3>群服双向互通</h3>
+          <p>QQ 群消息实时广播进服务器，MC 聊天 / 进出服 / 死亡事件自动推送到群，自定义消息格式。</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon"><i class="ri-qq-fill"></i></div>
+          <h3>腾讯官方协议</h3>
+          <p>官方机器人 API 全量封装：群消息、富媒体图片 / 视频 / 文件、禁言、入群审批、指令面板，稳定合规。</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon"><i class="ri-server-line"></i></div>
+          <h3>多服务器聚合</h3>
+          <p>一个网关同时桥接主服 + 子服，群消息发往所有服务器，各服消息汇聚回群，「查服」一条命令看全服。</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon"><i class="ri-puzzle-line"></i></div>
+          <h3>JS 子插件生态</h3>
+          <p>BDS 端 mods 动态加载：猜数字、群管理、自定义命令随手扩展，即改即用，无需改主插件。</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon"><i class="ri-code-box-line"></i></div>
+          <h3>Python 子插件</h3>
+          <p>pymods 标准框架：manifest + main.py 固定结构，ctx.api 直达全部官方 API，优先级调度、后台任务、事件钩子。</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon"><i class="ri-image-2-line"></i></div>
+          <h3>HTML 图卡渲染</h3>
+          <p>自绘图协议与 HTML 模板双通道，Edge 无头截图出图：帮助图卡、在线人数、玩家信息、服务器状态一目了然。</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon"><i class="ri-dashboard-3-line"></i></div>
+          <h3>本地 Web 管理面板</h3>
+          <p>浏览器打开即用：多服状态、远程执行、互通日志、可视化配置编辑器，保存后网关热重载，无需重启。</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon"><i class="ri-shield-check-line"></i></div>
+          <h3>远程执行指令</h3>
+          <p>OpenID 白名单授权 + 危险指令黑名单双重防护，QQ 群里也能安全地向服务器下发控制台指令。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── 架构 ─────────────────────────────────────────── -->
+    <section class="site-section site-section--alt" id="architecture">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Architecture</p>
+        <h2 class="section-title">群 → 网关 → 服务器</h2>
+        <p class="section-desc">轻量三层架构：Python 网关负责 QQ 官方协议与图卡渲染，BDS 端 LSE 插件负责游戏内事件与指令，二者通过本地 HTTP 双向通信。</p>
+      </div>
+
+      <div class="arch-flow reveal">
+        <div class="arch-node">
+          <div class="arch-icon"><i class="ri-qq-fill"></i></div>
+          <h4>QQ 群</h4>
+          <p>群成员聊天、群命令、@机器人</p>
+        </div>
+        <div class="arch-edge"><i class="ri-arrow-right-line"></i></div>
+        <div class="arch-node arch-node--gateway">
+          <div class="arch-icon"><i class="ri-cpu-line"></i></div>
+          <h4>Python 网关</h4>
+          <p>QQBotAPI 官方封装 · CardRenderer 图卡 · pymods 子插件</p>
+        </div>
+        <div class="arch-edge arch-edge--both"><i class="ri-arrow-left-right-line"></i></div>
+        <div class="arch-node">
+          <div class="arch-icon"><i class="ri-gamepad-line"></i></div>
+          <h4>BDS · LSE 插件</h4>
+          <p>QQMCBridge.js · mods 子插件 · 游戏事件监听</p>
+        </div>
+      </div>
+
+      <div class="arch-note reveal">
+        <i class="ri-information-line"></i>
+        <p>多后端模式：网关通过 <code>backends</code> 配置同时连接多个服务器实例（10724 / 10725 / …），增删服务器只需改配置并重启网关。</p>
+      </div>
+    </section>
+
+    <!-- ── 命令 ─────────────────────────────────────────── -->
+    <section class="site-section" id="commands">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Commands</p>
+        <h2 class="section-title">群里直接指挥服务器</h2>
+        <p class="section-desc">内置命令开箱即用，管理员可在 config.json 中自定义命令词；子插件还可以不断添加新玩法。</p>
+      </div>
+
+      <div class="commands-grid">
+        <div class="command-card reveal">
+          <span class="command-key">查服</span>
+          <p>聚合所有互通服务器的在线玩家，一个命令看全服</p>
+        </div>
+        <div class="command-card reveal">
+          <span class="command-key">查TPS</span>
+          <p>查看服务器实时 TPS 与运行状态</p>
+        </div>
+        <div class="command-card reveal">
+          <span class="command-key">设置名称 &lt;玩家名&gt;</span>
+          <p>把 QQ 昵称绑定到游戏角色，消息显示为角色名</p>
+        </div>
+        <div class="command-card reveal">
+          <span class="command-key">个人信息 [玩家名]</span>
+          <p>查询生命、坐标、游戏模式等玩家信息</p>
+        </div>
+        <div class="command-card reveal">
+          <span class="command-key">执行 &lt;MC指令&gt;</span>
+          <p>远程执行控制台指令，OpenID 白名单 + 危险指令黑名单</p>
+        </div>
+        <div class="command-card reveal">
+          <span class="command-key">猜数 / 猜 &lt;数字&gt;</span>
+          <p>在群里玩 1~100 猜数字小游戏</p>
+        </div>
+        <div class="command-card reveal">
+          <span class="command-key">我的openid</span>
+          <p>获取自己的 OpenID，用于加入远程执行白名单</p>
+        </div>
+        <div class="command-card reveal">
+          <span class="command-key">布吉岛 &lt;玩家名&gt;</span>
+          <p>查询布吉岛玩家基础信息与战绩 / 对局记录</p>
+        </div>
+        <div class="command-card reveal">
+          <span class="command-key">帮助</span>
+          <p>查看全部可用命令与已加载子插件说明图卡</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 开源仓库 ─────────────────────────────────────── -->
+    <section class="site-section site-section--alt" id="repos">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Open Source</p>
+        <h2 class="section-title">开源仓库</h2>
+        <p class="section-desc">QQMCBridge+ 拆分两个仓库分别维护：<strong>BDS 端 LSE 插件</strong>与<strong>Python 网关</strong>。上游原版由 <strong>JERC-STUDIO</strong> 开发并开源，增强版在其基础上扩展，同样遵循 GPLv3。</p>
+      </div>
+
+      <div class="repos-grid">
+        <a class="repo-card repo-card--primary reveal"
+           href="https://github.com/fengyushaonian/QQMCBridgeplus-LSE"
+           target="_blank" rel="noopener noreferrer">
+          <div class="repo-top">
+            <span class="repo-icon"><i class="ri-code-s-slash-line"></i></span>
+            <span class="repo-badge">BDS 端</span>
+          </div>
+          <h3 class="repo-name">QQMCBridgeplus-LSE</h3>
+          <p class="repo-path">fengyushaonian / QQMCBridgeplus-LSE</p>
+          <p class="repo-desc">插件主体（JavaScript / LLSE）。负责游戏内聊天、进出服、死亡等事件监听与广播，承载 mods 子插件生态、群命令解析与远程指令执行。</p>
+          <div class="repo-foot">
+            <span class="repo-tag repo-tag--js">JavaScript</span>
+            <span class="repo-go">前往仓库<i class="ri-arrow-right-up-line"></i></span>
+          </div>
+        </a>
+
+        <a class="repo-card repo-card--primary reveal"
+           href="https://github.com/fengyushaonian/QQMCBridgeplus_python-adapter"
+           target="_blank" rel="noopener noreferrer">
+          <div class="repo-top">
+            <span class="repo-icon repo-icon--py"><i class="ri-terminal-box-line"></i></span>
+            <span class="repo-badge">网关端</span>
+          </div>
+          <h3 class="repo-name">QQMCBridgeplus_python-adapter</h3>
+          <p class="repo-path">fengyushaonian / QQMCBridgeplus_python-adapter</p>
+          <p class="repo-desc">Python 网关。封装腾讯官方机器人 API、HTML 图卡渲染、pymods 子插件框架、多服务器聚合与本地 Web 管理面板，可与 BDS 同机或独立部署。</p>
+          <div class="repo-foot">
+            <span class="repo-tag repo-tag--py">Python</span>
+            <span class="repo-go">前往仓库<i class="ri-arrow-right-up-line"></i></span>
+          </div>
+        </a>
+
+        <a class="repo-card repo-card--upstream reveal"
+           href="https://github.com/JERC-STUDIO/QQMCBridge"
+           target="_blank" rel="noopener noreferrer">
+          <div class="repo-top">
+            <span class="repo-icon repo-icon--up"><i class="ri-git-repository-line"></i></span>
+            <span class="repo-badge repo-badge--up">Upstream</span>
+          </div>
+          <h3 class="repo-name">QQMCBridge</h3>
+          <p class="repo-path">JERC-STUDIO / QQMCBridge</p>
+          <p class="repo-desc">原版 / 上游项目。群服互通的基础实现与最初设计均来自此仓库，QQMCBridge+ 全部魔改增强均基于它，感谢原作者 JERC-STUDIO 的开源。</p>
+          <div class="repo-foot">
+            <span class="repo-tag repo-tag--up">原版 · 上游</span>
+            <span class="repo-go">前往仓库<i class="ri-arrow-right-up-line"></i></span>
+          </div>
+        </a>
+      </div>
+
+      <div class="repo-note reveal">
+        <i class="ri-information-line"></i>
+        <p>两个增强版仓库可以分开 clone：只跑服务器就装 <code>LSE</code>，只跑网关就装 <code>python-adapter</code>；也可以直接下载上面的发布包，里面两边都已打包好。</p>
+      </div>
+    </section>
+
+    <!-- ── 下载与部署 ───────────────────────────────────── -->
+    <section class="site-section site-section--alt" id="download">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Deploy</p>
+        <h2 class="section-title">三步部署，即刻互通</h2>
+        <p class="section-desc">需要一台装了 LiteLoaderBDS（LSE）的基岩版服务器，和一台能联网的机器运行 Python 网关（可与服务器同机）。</p>
+      </div>
+
+      <div class="deploy-steps reveal">
+        <div class="deploy-step">
+          <span class="deploy-num">1</span>
+          <div class="deploy-body">
+            <h4>安装插件</h4>
+            <p>将 <code>QQMCBridge/</code> 复制到 <code>plugins/</code> 目录，修改 <code>config.json</code> 中的群 OpenID 与机器人凭证。</p>
+          </div>
+        </div>
+        <div class="deploy-step">
+          <span class="deploy-num">2</span>
+          <div class="deploy-body">
+            <h4>启动网关</h4>
+            <p><code>pip install requests websockets</code> 后运行 <code>python qq_mc_gateway.py</code>，连接官方 WebSocket 事件通道。</p>
+          </div>
+        </div>
+        <div class="deploy-step">
+          <span class="deploy-num">3</span>
+          <div class="deploy-body">
+            <h4>开始使用</h4>
+            <p>在群里发「帮助」查看命令；浏览器打开 <code>http://127.0.0.1:8080</code> 进入本地 Web 管理面板。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="download-cta reveal">
+        <div class="download-cta-copy">
+          <h3>准备好连接群与服了吗？</h3>
+          <p>下载 QQMCBridge+ 发布包，几分钟内让 QQ 群与你的基岩版服务器双向互通。</p>
+        </div>
+        <div class="download-cta-actions">
+          <a class="cta-link cta-color-blue cta-primary" href="QQMCBridgeplus-release.zip" draggable="false"><i class="ri-download-cloud-2-line"></i>下载发布包</a>
+          <a class="cta-link cta-color-teal cta-secondary" href="https://github.com/fengyushaonian/QQMCBridgeplus-LSE" target="_blank" rel="noopener noreferrer" draggable="false"><i class="ri-github-fill"></i>LSE 插件仓库</a>
+          <a class="cta-link cta-color-teal cta-secondary" href="https://github.com/fengyushaonian/QQMCBridgeplus_python-adapter" target="_blank" rel="noopener noreferrer" draggable="false"><i class="ri-github-fill"></i>Python 网关仓库</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── 页脚 ─────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg class="brand-mark" width="22" height="22" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="brandGradF" x1="2" y1="2" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#0d84ff"/>
+              <stop offset="1" stop-color="#0694a2"/>
+            </linearGradient>
+          </defs>
+          <rect x="1.5" y="1.5" width="23" height="23" rx="6.5" fill="url(#brandGradF)"/>
+          <path d="M6.8 9.2c0-1.4 1.1-2.5 2.5-2.5h7.4c1.4 0 2.5 1.1 2.5 2.5v4.6c0 1.4-1.1 2.5-2.5 2.5h-3.7l-3.4 2.6v-2.6h-.3c-1.4 0-2.5-1.1-2.5-2.5V9.2Z" fill="#fff"/>
+        </svg>
+        <span>QQMCBridge<em class="brand-plus">+</em></span>
+      </div>
+      <div class="footer-links">
+        <a class="footer-link" href="https://github.com/fengyushaonian/QQMCBridgeplus-LSE" target="_blank" rel="noopener noreferrer"><i class="ri-github-fill"></i>QQMCBridgeplus-LSE</a>
+        <a class="footer-link" href="https://github.com/fengyushaonian/QQMCBridgeplus_python-adapter" target="_blank" rel="noopener noreferrer"><i class="ri-github-fill"></i>QQMCBridgeplus_python-adapter</a>
+        <a class="footer-link" href="https://github.com/JERC-STUDIO/QQMCBridge" target="_blank" rel="noopener noreferrer"><i class="ri-git-repository-line"></i>QQMCBridge（原版上游）</a>
+      </div>
+      <p class="footer-note">QQMCBridge+ 是原插件 <a href="https://github.com/JERC-STUDIO/QQMCBridge" target="_blank" rel="noopener noreferrer">QQMCBridge</a> 的魔改增强版本 · 基于 LiteLoaderBDS（LSE）· 腾讯官方机器人协议 · GPLv3 开源 · 使用请遵守腾讯机器人 API 服务条款</p>
+      <p class="footer-meta">QQMCBridge+ · 群服互通插件（魔改增强版）</p>
+    </div>
+  </footer>
+
+</body>
+</html>

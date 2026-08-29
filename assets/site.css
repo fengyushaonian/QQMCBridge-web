@@ -1,0 +1,688 @@
+/* ============================================================
+   QQMCBridge 官网 — 扩展样式（site.css）
+   设计语言对齐模板 main.css：浅色玻璃拟态 + 蓝色/青色强调
+   ============================================================ */
+
+/* ── 品牌标识 ─────────────────────────────────────────── */
+.brand {
+  gap: 10px;
+}
+.brand-mark {
+  display: block;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 6px 14px rgba(0, 97, 211, .28));
+}
+.brand-text {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* ── Hero 布局微调 ────────────────────────────────────── */
+.hero-layout {
+  align-items: center;
+}
+.hero-copy {
+  margin-left: var(--content-offset);
+}
+
+/* ── Hero 右侧产品示意 ────────────────────────────────── */
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 8px;
+  min-width: 0;
+}
+.hv-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: var(--shadow-soft);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.hv-card-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-soft);
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--line);
+}
+.hv-card-head i {
+  font-size: 15px;
+  color: var(--accent);
+}
+.hv-card--mc .hv-card-head i {
+  color: #0694a2;
+}
+.hv-msg {
+  font-size: 12.5px;
+  line-height: 1.45;
+  padding: 6px 10px;
+  border-radius: 9px;
+  max-width: 92%;
+}
+.hv-msg--in {
+  align-self: flex-start;
+  background: var(--accent-soft);
+  color: var(--text);
+  border-top-left-radius: 3px;
+}
+.hv-msg--out {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #0d84ff, #0694a2);
+  color: #fff;
+  border-top-right-radius: 3px;
+}
+.hv-card--mc .hv-msg--in {
+  background: rgba(6, 148, 162, .12);
+}
+.hv-card--mc .hv-msg--out {
+  background: rgba(13, 23, 38, .78);
+}
+.hv-bridge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  color: var(--accent);
+  font-size: 18px;
+  position: relative;
+}
+.hv-bridge::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--line-strong), var(--accent), var(--line-strong));
+}
+.hv-bridge i {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ── 通用区块 ─────────────────────────────────────────── */
+.site-section {
+  width: var(--content-width);
+  margin: 0 auto;
+  padding: clamp(72px, 10vw, 120px) 0;
+  position: relative;
+}
+.site-section--alt {
+  width: 100%;
+  background: linear-gradient(180deg, transparent, rgba(0, 97, 211, .045) 18%, rgba(0, 97, 211, .045) 82%, transparent);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.site-section--alt > * {
+  width: var(--content-width);
+  margin-inline: auto;
+}
+.section-head {
+  max-width: 720px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+.section-eyebrow {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -.03em;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+.section-desc {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-soft);
+}
+
+/* ── 特性卡片 ─────────────────────────────────────────── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.feature-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 20px;
+  box-shadow: var(--shadow-soft);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: transform .24s cubic-bezier(.22, 1, .36, 1), border-color .24s ease, box-shadow .24s ease;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 103, 212, .4);
+  box-shadow: 0 22px 44px rgba(8, 26, 54, .12);
+}
+.feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  color: #fff;
+  background: linear-gradient(135deg, #0d84ff, #0694a2);
+  box-shadow: 0 10px 22px rgba(0, 97, 211, .28);
+  margin-bottom: 16px;
+}
+.feature-card:nth-child(even) .feature-icon {
+  background: linear-gradient(135deg, #5865f2, #0d84ff);
+}
+.feature-card h3 {
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  margin-bottom: 8px;
+}
+.feature-card p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+
+/* ── 架构图 ───────────────────────────────────────────── */
+.arch-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 20px;
+}
+.arch-node {
+  flex: 1 1 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.arch-node--gateway {
+  border-color: rgba(0, 103, 212, .45);
+  background: linear-gradient(180deg, rgba(0, 97, 211, .07), var(--bg-elevated) 55%);
+}
+.arch-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  color: #fff;
+  background: linear-gradient(135deg, #0d84ff, #0694a2);
+  box-shadow: 0 12px 26px rgba(0, 97, 211, .3);
+  margin-bottom: 16px;
+}
+.arch-node--gateway .arch-icon {
+  background: linear-gradient(135deg, #5865f2, #0d84ff);
+}
+.arch-node h4 {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.arch-node p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+.arch-edge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 20px;
+}
+.arch-edge--both {
+  color: #0694a2;
+}
+.arch-note,
+.repo-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(0, 103, 212, .22);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.arch-note i,
+.repo-note i {
+  color: var(--accent);
+  font-size: 17px;
+  margin-top: 2px;
+}
+.arch-note code,
+.repo-note code {
+  background: rgba(255, 255, 255, .7);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 12.5px;
+}
+
+/* ── 命令卡片 ─────────────────────────────────────────── */
+.commands-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.command-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow-soft);
+  transition: transform .24s cubic-bezier(.22, 1, .36, 1), border-color .24s ease;
+}
+.command-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 103, 212, .4);
+}
+.command-key {
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #0d84ff, #0694a2);
+  border-radius: 8px;
+  padding: 4px 10px;
+  letter-spacing: -.01em;
+}
+.command-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+/* ── 部署步骤 ─────────────────────────────────────────── */
+.deploy-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.deploy-step {
+  display: flex;
+  gap: 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--shadow-soft);
+}
+.deploy-num {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #0d84ff, #0694a2);
+  box-shadow: 0 8px 18px rgba(0, 97, 211, .26);
+}
+.deploy-body h4 {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.deploy-body p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+.deploy-body code {
+  background: rgba(255, 255, 255, .7);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* ── 下载 CTA ─────────────────────────────────────────── */
+.download-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  flex-wrap: wrap;
+  background: linear-gradient(120deg, rgba(13, 132, 255, .1), rgba(6, 148, 162, .1)), var(--bg-elevated);
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  padding: clamp(26px, 4vw, 40px);
+  box-shadow: var(--shadow-soft);
+}
+.download-cta-copy h3 {
+  font-size: clamp(20px, 2.6vw, 26px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  margin-bottom: 8px;
+}
+.download-cta-copy p {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+.download-cta-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── 页脚 ─────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--line-strong);
+  background: var(--bg-elevated);
+}
+.footer-inner {
+  width: var(--content-width);
+  margin: 0 auto;
+  padding: 34px 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 15px;
+  font-weight: 800;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-top: 2px;
+}
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-soft);
+  background: var(--accent-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  text-decoration: none;
+  transition: color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.footer-link:hover {
+  color: var(--accent);
+  border-color: rgba(0, 103, 212, .4);
+  transform: translateY(-1px);
+}
+.footer-link i {
+  font-size: 14px;
+}
+.footer-note {
+  font-size: 12.5px;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+.footer-note a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(0, 103, 212, .5);
+}
+.footer-note a:hover {
+  color: var(--accent-strong);
+}
+.footer-meta {
+  font-size: 12px;
+  color: var(--text-soft);
+  opacity: .72;
+}
+
+/* ── 导航 GitHub 入口 ───────────────────────────────── */
+.nav-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  color: var(--text-soft);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.nav-github:hover {
+  color: var(--text);
+  border-color: rgba(0, 103, 212, .45);
+  transform: translateY(-1px);
+}
+.nav-github i {
+  font-size: 17px;
+}
+
+/* ── 开源仓库卡片 ───────────────────────────────────── */
+.repos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.repo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px 20px 18px;
+  box-shadow: var(--shadow-soft);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  text-decoration: none;
+  color: inherit;
+  transition: transform .24s cubic-bezier(.22, 1, .36, 1), border-color .24s ease, box-shadow .24s ease;
+}
+.repo-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 103, 212, .45);
+  box-shadow: 0 22px 44px rgba(8, 26, 54, .13);
+}
+.repo-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.repo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #fff;
+  background: linear-gradient(135deg, #0d84ff, #0694a2);
+  box-shadow: 0 10px 22px rgba(0, 97, 211, .26);
+}
+.repo-icon--py {
+  background: linear-gradient(135deg, #5865f2, #0d84ff);
+}
+.repo-icon--up {
+  background: linear-gradient(135deg, #7c8797, #4b5563);
+  box-shadow: 0 10px 22px rgba(60, 70, 85, .24);
+}
+.repo-badge {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(0, 103, 212, .22);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.repo-badge--up {
+  color: #5b6675;
+  background: rgba(124, 135, 151, .12);
+  border-color: rgba(124, 135, 151, .28);
+}
+.repo-name {
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  word-break: break-word;
+}
+.repo-path {
+  font-size: 12px;
+  color: var(--text-soft);
+  opacity: .85;
+  font-family: "Cascadia Code", Consolas, monospace;
+  word-break: break-all;
+}
+.repo-desc {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-soft);
+  flex: 1 1 auto;
+}
+.repo-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+.repo-tag {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 6px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+.repo-tag--py {
+  color: #4759d6;
+  background: rgba(88, 101, 242, .12);
+}
+.repo-tag--up {
+  color: #5b6675;
+  background: rgba(124, 135, 151, .14);
+}
+.repo-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.repo-go i {
+  font-size: 15px;
+  transition: transform .24s cubic-bezier(.22, 1, .36, 1);
+}
+.repo-card:hover .repo-go i {
+  transform: translate(2px, -2px);
+}
+
+/* ── 锚点滚动偏移（避免被固定导航遮住）────────────── */
+[id] {
+  scroll-margin-top: 72px;
+}
+
+/* ── 滚动入场动画（模板 JS 自动加 .is-visible）────────── */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity .7s cubic-bezier(.22, 1, .36, 1), transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateZ(0);
+}
+
+/* ── 响应式 ───────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .features-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 940px) {
+  .repos-grid { grid-template-columns: 1fr; }
+  .nav-plain-link--repo { display: none; }
+  .nav-github-text { display: none; }
+  .nav-github { padding: 0 11px; min-height: 36px; }
+  .hero-layout { grid-template-columns: 1fr; }
+  .hero-copy { margin-left: 0; }
+  .hero-visual { max-width: 420px; margin: 34px auto 0; }
+  .hero-wrap { height: auto; min-height: 100dvh; }
+  .hero-wrap .hero.hero-section { padding: calc(var(--nav-height) + 56px) 0 72px; }
+  .commands-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .deploy-steps { grid-template-columns: 1fr; }
+  .arch-flow { flex-direction: column; gap: 0; }
+  .arch-edge { width: 100%; height: 40px; transform: rotate(90deg); }
+  .arch-edge--both i { transform: rotate(-90deg); }
+}
+@media (max-width: 640px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .commands-grid { grid-template-columns: 1fr; }
+  .site-section { padding: 64px 0; }
+  .download-cta { flex-direction: column; align-items: stretch; }
+  .download-cta-actions .cta-link { width: 100%; }
+}

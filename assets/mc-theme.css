@@ -1,0 +1,503 @@
+/* ============================================================
+   QQMCBridge 官网 — Minecraft 官网设计元素主题（mc-theme.css）
+   设计 token 取自 https://www.minecraft.net 官方站点样式
+   （mc-components.min.css / clientlib-site 字体定义）
+   全局默认风格：整站固定为 Minecraft 方块像素风
+   ============================================================ */
+
+/* ── Minecraft 像素字体（官方 woff2，已本地化）──────────── */
+@font-face {
+  font-family: "MinecraftTen";
+  src: url("./fonts/Minecraft-Tenv2.woff2") format("woff2");
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── MC 官方色板（:root 原样抄自 mc-components.min.css）─── */
+:root {
+  /* Core 色板 */
+  --mc-green-6: #2a641c;
+  --mc-green-5: #3c8527;
+  --mc-green-4: #52a535;
+  --mc-green-3: #6cc349;
+  --mc-green-2: #86d562;
+  --mc-green-1: #a0e081;
+  --mc-grey-6: #262423;
+  --mc-grey-5: #3d3938;
+  --mc-grey-4: #6b6562;
+  --mc-grey-3: #aba09c;
+  --mc-grey-2: #d0c5c0;
+  --mc-grey-1: #ede5e2;
+  --mc-rich-black: #000;
+  --mc-off-black: #171615;
+  --mc-white: #fff;
+  --mc-off-white: #fcf5f1;
+  /* 官方渐变 */
+  --mc-grad-green: linear-gradient(180deg, #6cc349, #52a535 50%, #3c8527);
+  --mc-grad-dark: linear-gradient(180deg, #3d3938, #262423 50%, #171615);
+  --mc-grad-light: linear-gradient(180deg, #fcf5f1, #ede5e2 50%, #d0c5c0);
+  /* 字体栈（官方 vanilla 字体栈 + 中文回退） */
+  --mc-font-head: "MinecraftTen", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mc-font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+  /* 方块地层尺寸：与 res/ 下贴图 16px 原图一致，放大到 32px 显示更厚 */
+  --mc-block-size: 48px;
+  --grid-size: 48px;
+}
+
+/* ── 全局基调：米白底 + 深色描边 + 像素方角 ─────────────── */
+:root {
+  --bg: var(--mc-off-white);
+  --bg-elevated: var(--mc-white);
+  --bg-nav: rgba(252, 245, 241, .92);
+  --line: rgba(23, 22, 21, .18);
+  --line-strong: rgba(23, 22, 21, .32);
+  --text: #171615;
+  --text-soft: rgba(23, 22, 21, .72);
+  --accent: #3c8527;
+  --accent-strong: #2a641c;
+  --accent-soft: rgba(82, 165, 53, .14);
+  --shadow-soft: 0 10px 24px rgba(23, 22, 21, .10);
+  font-family: var(--mc-font-body);
+}
+.page-vignette {
+  display: none;
+}
+
+/* ── 导航：米白底 + 深灰描边 + 像素标题字 ───────────────── */
+.nav-shell {
+  background: var(--mc-white);
+  border-bottom: 2px solid var(--mc-grey-6);
+  box-shadow: 0 4px 0 rgba(23, 22, 21, .06);
+}
+.brand-text {
+  font-family: var(--mc-font-head);
+  font-size: 17px;
+  letter-spacing: .02em;
+}
+.nav-plain-link {
+  color: var(--mc-grey-5);
+  font-weight: 700;
+}
+.nav-plain-link:hover {
+  color: var(--mc-green-5);
+}
+
+/* ── Hero：MC 地层 —— 草方块(顶 15%) / 泥土(中 15%) / 石头(底 70%) ──── */
+/* 鼠标所在那一格自动变成钻石块(由 .grid-highlight 接管) */
+/* 贴图取自 website/res/(16x16 原图)，base64 内嵌，48px 一格 */
+.hero-wrap {
+  background-color: #3d3938;
+  border-bottom: 0;
+}
+.hero-wrap .mc-strata {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  image-rendering: pixelated;
+  background-repeat: repeat;
+  background-size: 48px 48px;
+  z-index: 0;
+}
+.hero-wrap .mc-strata--grass {
+  top: var(--nav-height);
+  height: 48px;
+  background-repeat: repeat-x;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAQlBMVEV5VTp0WESWbEq5hVyHh4dsbGxVgUpSfkhRe0ZMdEJIbT5Gaz1FaTxDZjtDZjpCZTo/YDc+XjY9XjY9XDU5VjFZPSk5oGSCAAAAfklEQVR4AQWACVKEQBAE0yzAZpzFs/7/VYPZ65k9a91zXz/3Yp7ZV+f7WvMxz3yyen1Nd+de7/1bpWe72/72VVoQU6HtiQWq2BYKhAAHJCSIQKJgFRRBpChQwEILQIIgCbFJ9QBBg6dSKVQ0AEACwhtKU6JIQ2mCoEiUAwWl/z1rBjYDWiQaAAAAAElFTkSuQmCC");
+}
+.hero-wrap .mc-strata--dirt {
+  top: calc(var(--nav-height) + 48px);
+  height: calc(100% - 70% - var(--nav-height) - 48px);
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAFVBMVEV5VTq5hVyHh4eWbEpsbGx0WERZPSk6VlZqAAAAa0lEQVR42gXBwQnDQAxFwSd+0FnLgs8+5SyjsA2kgZQgY9j+S8gMM61oM9R6W85NeBDs4BPLSpbk9bBeary02zGC02JIMIpVFCm5kkbtDUPIYt5HnaQuffNxPCuAgfiVH1bk7T5EkTPPovwPGbIOYwnMHcMAAAAASUVORK5CYII=");
+}
+.hero-wrap .mc-strata--stone {
+  bottom: 0;
+  height: 70%;
+  background-image: url("data:image/webp;base64,UklGRoIAAABXRUJQVlA4THYAAAAvD8ADAB+gkG0EGAPcT3gK2UaAMcD9hKeQbQQYA9xPePMf/5MEwDZwGgAA0iT4AH6AO3jALbtf4921+w2al33d34jof/w9vIhyVAQht3g1LaNJv7Qp4OV8YgsAF/L52urd6zoHQMgUU/FkbARztPjwiuJfCFMC");
+}
+.hero-wrap .page-grid {
+  background-image: none;
+}
+.grid-highlight:before {
+  background-color: transparent;
+  background-image: url("data:image/webp;base64,UklGRrYAAABXRUJQVlA4TKkAAAAvD8ADAEegIAAIxP+VNnRzQ20jKU7/jREjUnIa8OaNoraNmNv8ER6H/e38x38Eeg9rMaQXF0MKyMnnwU0AsG0rMF0AJoB4AbAcArZcBJIY2H927u6I/gdz5VJlvjfq3MZbf8Krotr1p9B6YhicVolDGpzylBV97wqSieV794BA5eMghUQ8OUBA7KZHMhHRfwQVZRs/YmIRoKkC1Yw8ihRBDs91+/3X//oHAA==");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 48px 48px;
+  image-rendering: pixelated;
+  box-shadow: none;
+  border-radius: 0;
+}
+.hero-eyebrow {
+  color: #ffe066;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .55);
+}
+.hero-title {
+  font-family: var(--mc-font-head);
+  color: var(--mc-white);
+  letter-spacing: .01em;
+  text-shadow: 4px 4px 0 rgba(0, 0, 0, .45);
+}
+.hero-rotator > span:first-child {
+  color: var(--mc-grey-1);
+}
+.hero-chip {
+  background: var(--mc-grad-green);
+  border: 2px solid var(--mc-off-black);
+  box-shadow: inset 0 -5px 0 rgba(0, 0, 0, .28), 4px 4px 0 rgba(0, 0, 0, .35);
+  font-family: var(--mc-font-head);
+}
+.hero-chip-meter {
+  color: var(--mc-off-white);
+}
+
+/* ── MC 官方按钮：2px 深描边 + inset 底部阴影 + 粗体 ────── */
+.cta-link {
+  border-radius: 4px;
+  border: 2px solid var(--mc-off-black);
+  font-weight: 700;
+  letter-spacing: .02em;
+  box-shadow: 3px 3px 0 rgba(23, 22, 21, .22);
+  transition: transform .14s cubic-bezier(.22, 1, .36, 1), background-color .18s ease, box-shadow .14s ease;
+}
+.cta-link:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgba(23, 22, 21, .22);
+}
+.cta-link:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(23, 22, 21, .22);
+}
+/* 绿色渐变主按钮（仿 MC 官网 CTA） */
+.cta-color-blue,
+.cta-primary {
+  background: var(--mc-grad-green);
+  border-color: var(--mc-off-black);
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, .28), 3px 3px 0 rgba(23, 22, 21, .22);
+  color: var(--mc-white);
+}
+.cta-color-blue:hover,
+.cta-primary:hover {
+  background: linear-gradient(180deg, #86d562, #6cc349 50%, #52a535);
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, .22), 4px 4px 0 rgba(23, 22, 21, .22);
+}
+/* 米白底按钮（仿 MC 官网 Secondary） */
+.cta-color-teal,
+.cta-color-discord,
+.cta-secondary {
+  background: var(--mc-off-white);
+  border-color: var(--mc-off-black);
+  box-shadow: inset 0 -6px 0 var(--mc-grey-3), 3px 3px 0 rgba(23, 22, 21, .22);
+  color: var(--mc-grey-5);
+}
+.cta-color-teal:hover,
+.cta-color-discord:hover,
+.cta-secondary:hover {
+  background: var(--mc-white);
+  color: var(--mc-green-5);
+}
+
+/* ── 区块标题：像素字 + 绿 eyebrow ──────────────────────── */
+.section-eyebrow {
+  color: var(--mc-green-5);
+  letter-spacing: .1em;
+}
+.section-title {
+  font-family: var(--mc-font-head);
+  letter-spacing: .01em;
+}
+.section-desc {
+  color: var(--mc-grey-4);
+}
+.site-section--alt {
+  background: linear-gradient(180deg, transparent, rgba(82, 165, 53, .07) 18%, rgba(82, 165, 53, .07) 82%, transparent);
+  border-color: var(--line-strong);
+}
+
+/* ── 特性卡片：白底 + 2px 深描边 + 像素感 ───────────────── */
+.feature-card {
+  border: 2px solid var(--mc-grey-6);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 rgba(23, 22, 21, .10);
+}
+.feature-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 rgba(82, 165, 53, .30);
+  border-color: var(--mc-green-4);
+}
+.feature-icon {
+  background: var(--mc-grad-green);
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .28), 3px 3px 0 rgba(23, 22, 21, .18);
+  border: 2px solid var(--mc-off-black);
+  border-radius: 4px;
+}
+.feature-card:nth-child(even) .feature-icon {
+  background: var(--mc-grad-dark);
+}
+.feature-card h3 {
+  font-family: var(--mc-font-head);
+  letter-spacing: .01em;
+}
+.feature-card p {
+  color: var(--mc-grey-4);
+}
+
+/* ── 架构图：节点像素边框 + 网关绿高亮 ──────────────────── */
+.arch-node {
+  border: 2px solid var(--mc-grey-6);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 rgba(23, 22, 21, .10);
+}
+.arch-node--gateway {
+  border-color: var(--mc-green-5);
+  background: linear-gradient(180deg, rgba(108, 195, 73, .12), var(--mc-white) 60%);
+  box-shadow: 4px 4px 0 rgba(82, 165, 53, .30);
+}
+.arch-icon {
+  background: var(--mc-grad-green);
+  border: 2px solid var(--mc-off-black);
+  border-radius: 4px;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .28), 3px 3px 0 rgba(23, 22, 21, .18);
+}
+.arch-node--gateway .arch-icon {
+  background: var(--mc-grad-dark);
+}
+.arch-node h4 {
+  font-family: var(--mc-font-head);
+}
+.arch-edge {
+  color: var(--mc-green-5);
+}
+.arch-note,
+.repo-note {
+  background: rgba(108, 195, 73, .10);
+  border: 2px solid var(--mc-green-5);
+  border-radius: 6px;
+}
+.arch-note i,
+.repo-note i { color: var(--mc-green-5); }
+.arch-note code,
+.repo-note code {
+  background: var(--mc-white);
+  border: 1px solid var(--mc-grey-3);
+  color: var(--mc-grey-6);
+}
+
+/* ── 开源仓库卡片：像素描边 + MC 绿高亮 ────────────────── */
+.repos-grid { gap: 18px; }
+.repo-card {
+  border: 2px solid var(--mc-grey-6);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 rgba(23, 22, 21, .10);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.repo-card:hover {
+  transform: translate(-2px, -2px);
+  border-color: var(--mc-green-4);
+  box-shadow: 8px 8px 0 rgba(82, 165, 53, .30);
+}
+.repo-icon {
+  background: var(--mc-grad-green);
+  border: 2px solid var(--mc-off-black);
+  border-radius: 4px;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .28), 3px 3px 0 rgba(23, 22, 21, .18);
+}
+.repo-icon--py { background: var(--mc-grad-dark); }
+.repo-icon--up {
+  background: linear-gradient(180deg, #6b6562, #3d3938 50%, #262423);
+}
+.repo-badge {
+  color: var(--mc-green-6);
+  background: rgba(108, 195, 73, .18);
+  border: 2px solid var(--mc-green-5);
+  font-family: var(--mc-font-head);
+}
+.repo-badge--up {
+  color: var(--mc-grey-4);
+  background: rgba(107, 101, 98, .16);
+  border-color: var(--mc-grey-3);
+}
+.repo-name {
+  font-family: var(--mc-font-head);
+  letter-spacing: .01em;
+}
+.repo-path { color: var(--mc-grey-4); opacity: 1; }
+.repo-desc { color: var(--mc-grey-4); }
+.repo-foot { border-top: 1px dashed var(--mc-grey-3); }
+.repo-tag {
+  color: var(--mc-green-6);
+  background: rgba(108, 195, 73, .18);
+  border: 1px solid var(--mc-green-5);
+  border-radius: 4px;
+}
+.repo-tag--py {
+  color: var(--mc-green-6);
+  background: rgba(108, 195, 73, .18);
+  border-color: var(--mc-green-5);
+}
+.repo-tag--up {
+  color: var(--mc-grey-4);
+  background: rgba(107, 101, 98, .16);
+  border-color: var(--mc-grey-3);
+}
+.repo-go {
+  color: var(--mc-green-5);
+  font-family: var(--mc-font-head);
+}
+
+/* ── 命令卡片：MC 绿 tag + 像素边框 ─────────────────────── */
+.command-card {
+  border: 2px solid var(--mc-grey-6);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 rgba(23, 22, 21, .10);
+}
+.command-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 rgba(82, 165, 53, .30);
+  border-color: var(--mc-green-4);
+}
+.command-key {
+  background: var(--mc-grad-green);
+  border: 2px solid var(--mc-off-black);
+  border-radius: 4px;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .28);
+  font-family: var(--mc-font-head);
+  font-size: 13px;
+  letter-spacing: .02em;
+}
+.command-card p { color: var(--mc-grey-4); }
+
+/* ── 部署步骤 ───────────────────────────────────────────── */
+.deploy-step {
+  border: 2px solid var(--mc-grey-6);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 rgba(23, 22, 21, .10);
+}
+.deploy-num {
+  background: var(--mc-grad-green);
+  border: 2px solid var(--mc-off-black);
+  border-radius: 4px;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .28);
+  font-family: var(--mc-font-head);
+}
+.deploy-body h4 { font-family: var(--mc-font-head); }
+.deploy-body code {
+  background: var(--mc-white);
+  border: 1px solid var(--mc-grey-3);
+}
+.deploy-body p { color: var(--mc-grey-4); }
+
+/* ── 下载 CTA：深色像素横幅 ─────────────────────────────── */
+.download-cta {
+  background: var(--mc-grad-dark);
+  border: 2px solid var(--mc-off-black);
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 rgba(82, 165, 53, .30);
+}
+.download-cta-copy h3 {
+  color: var(--mc-white);
+  font-family: var(--mc-font-head);
+}
+.download-cta-copy p { color: var(--mc-grey-2); }
+
+/* ── Hero 右侧产品示意卡 ────────────────────────────────── */
+.hv-card {
+  border: 2px solid var(--mc-grey-6);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, .30);
+  background: rgba(252, 245, 241, .97);
+}
+.hv-card-head i { color: var(--mc-green-5); }
+.hv-card--mc .hv-card-head i { color: var(--mc-grey-4); }
+.hv-msg--in {
+  background: rgba(82, 165, 53, .14);
+  color: var(--mc-grey-6);
+}
+.hv-msg--out {
+  background: var(--mc-grad-green);
+}
+.hv-card--mc .hv-msg--out {
+  background: var(--mc-grad-dark);
+}
+.hv-bridge { color: var(--mc-green-2); }
+.hv-bridge i {
+  background: var(--mc-off-black);
+  border-color: var(--mc-off-black);
+  color: var(--mc-green-2);
+}
+
+/* ── 页脚：深色像素底 ───────────────────────────────────── */
+.site-footer {
+  background: var(--mc-grad-dark);
+  border-top: 4px solid var(--mc-green-4);
+}
+.footer-brand { color: var(--mc-white); font-family: var(--mc-font-head); }
+.footer-note, .footer-meta { color: var(--mc-grey-2); }
+
+/* ── 页脚仓库链接（深色底适配）────────────────────────── */
+.footer-links { gap: 8px 10px; }
+.footer-link {
+  color: var(--mc-grey-2);
+  background: rgba(252, 245, 241, .10);
+  border: 2px solid var(--mc-grey-4);
+  border-radius: 999px;
+}
+.footer-link:hover {
+  color: var(--mc-green-2);
+  background: rgba(108, 195, 73, .16);
+  border-color: var(--mc-green-4);
+  transform: translateY(-2px);
+}
+.footer-note a {
+  color: var(--mc-green-2);
+  border-bottom: 1px dashed rgba(134, 213, 98, .6);
+}
+.footer-note a:hover { color: var(--mc-white); }
+
+/* ── 导航 GitHub 按钮：MC 像素按钮 ─────────────────────── */
+.nav-github {
+  background: var(--mc-off-white);
+  border: 2px solid var(--mc-off-black);
+  border-radius: 4px;
+  color: var(--mc-grey-5);
+  font-family: var(--mc-font-head);
+  box-shadow: 3px 3px 0 rgba(23, 22, 21, .18);
+}
+.nav-github:hover {
+  background: var(--mc-white);
+  color: var(--mc-green-5);
+  border-color: var(--mc-off-black);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgba(82, 165, 53, .30);
+}
+
+/* ── QQMCBridge+ 品牌增强标识 ───────────────────────────── */
+.brand-plus {
+  font-style: normal;
+  color: #ffe066;
+  font-size: 1.12em;
+  margin-left: 1px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, .35);
+}
+.enhance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 18px;
+  padding: 6px 12px;
+  background: var(--mc-grad-green);
+  border: 2px solid var(--mc-off-black);
+  border-radius: 6px;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .28), 3px 3px 0 rgba(0, 0, 0, .3);
+  color: var(--mc-white);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--mc-font-head);
+  letter-spacing: .02em;
+}
+.enhance-badge i {
+  font-size: 14px;
+  color: #ffe066;
+}
