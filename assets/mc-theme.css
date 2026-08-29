@@ -37,8 +37,8 @@
   --mc-grad-green: linear-gradient(180deg, #6cc349, #52a535 50%, #3c8527);
   --mc-grad-dark: linear-gradient(180deg, #3d3938, #262423 50%, #171615);
   --mc-grad-light: linear-gradient(180deg, #fcf5f1, #ede5e2 50%, #d0c5c0);
-  /* 字体栈（官方 vanilla 字体栈 + 中文回退） */
-  --mc-font-head: "MinecraftTen", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  /* 字体栈：已移除 MinecraftTen，使用系统无衬线，中文优先 */
+  --mc-font-head: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
   --mc-font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
   /* 方块地层尺寸：与 res/ 下贴图 16px 原图一致，放大到 32px 显示更厚 */
   --mc-block-size: 48px;
